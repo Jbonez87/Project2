@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import firebase from '../../firebase.config.js';
 
 const propTypes = {
-  children: React.PropTypes.element.isRequired,
+  children: React.PropTypes.element,
 };
 
 class Home extends Component {
@@ -14,7 +14,7 @@ class Home extends Component {
           <p>We're your number one spot for
           hidden restaurants and speakeasies in
           NYC! Wanna know where they are?
-          What's the password (and your username)?</p>
+          Sign up!</p>
         </div>
         <div id="main-content">
           {this.props.children}

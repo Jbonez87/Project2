@@ -28,9 +28,9 @@ class Login extends Component {
         const errCode = err.code;
         const errMessage = err.message;
       })
-      // .then(() => {
-      //   this.props.router.push('/dashboard')
-      // })
+      .then(() => {
+        this.props.router.push('/dashboard')
+      })
   }
   render() {
     return (
