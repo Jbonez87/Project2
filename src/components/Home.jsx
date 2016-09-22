@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import firebase from '../../firebase.config.js';
 
 const propTypes = {
   children: React.PropTypes.element.isRequired,
