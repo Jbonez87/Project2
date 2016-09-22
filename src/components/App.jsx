@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Router, Route, IndexRoute, hashHistory } from 'react-router';
 import Home from './Home.jsx';
 import Login from './Login.jsx';
+import Register from './Register.jsx';
 
 const propTypes = {
   message: React.PropTypes.string.isRequired,
@@ -19,6 +20,7 @@ class App extends Component {
           <Router history={hashHistory}>
             <Route path="/" component={Home}>
               <IndexRoute component={Login} />
+              <Route path="/Register" component={Register} />
             </Route>
           </Router>
         </div>
