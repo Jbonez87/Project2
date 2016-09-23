@@ -1,30 +1,64 @@
 import React, { Component } from 'react';
-import { Router, Route, IndexRoute, hashHistory } from 'react-router';
-import Home from './Home.jsx';
-import Login from './Login.jsx';
-import Register from './Register.jsx';
-import Dashboard from './Dashboard.jsx'
+import { Link } from 'react-router';
+import firebase from '../../firebase.config.js';
 
 const propTypes = {
-  message: React.PropTypes.string.isRequired,
+  children: React.PropTypes.element.isRequired,
 };
 
 class App extends Component {
-  constructor(props) {
-    super(props);
+  constructor() {
+    super();
+    this.state = {
+      loggedIn: false,
+    };
+    this.signOut = this.signOut.bind(this);
+  }
+  componentWillMount() {
+    setTimeout(() => {
+      firebase.auth().onAuthStateChanged((user) => {
+        this.setState({
+          loggedIn: (!user),
+        });
+      });
+    }, 200);
+  }
+  signOut() {
+    firebase.auth()
+      .signOut()
+      .then(() => {
+        return (
+          <div>
+            <p>You have signed out</p>
+          </div>
+        );
+      });
+  }
+  loggedInLinks() {
+    if (!this.state.loggedIn) {
+      return (
+        <div>
+          <Link to="/login" id="login">Login</Link>
+          <Link to="/register" id="register">Register</Link>
+        </div>
+      );
+    } else {
+      <div id="sign-out">
+        <a href="#" onClick={this.signOut}>Sign Out</a>
+      </div>
+    }
   }
   render() {
     return (
-      <div className="container">
-        <h1>{this.props.message}</h1>
-        <div className="paths">
-          <Router history={hashHistory}>
-            <Route path="/" component={Home}>
-              <Route path="/login" component={Login} />
-              <Route path="/register" component={Register} />
-              <Route path="/dashboard" component={Dashboard} />
-            </Route>
-          </Router>
+      <div>
+        <div id="title-card">
+          <h1>Secret Spots</h1>
+          {
+            this.loggedInLinks()
+          }
+        </div>
+        <div id="main-content">
+          {this.props.children}
         </div>
       </div>
     );
