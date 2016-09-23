@@ -5,7 +5,7 @@ const config = {
   apiKey: "AIzaSyAD_Yn6FeMgHtcA8SBrCDyaEwlm6wDjzYY",
   authDomain: "secret-spots.firebaseapp.com",
   databaseURL: "https://secret-spots.firebaseio.com",
-  storageBucket: "",
+  storageBucket: "secret-spots.appspot.com",
   messagingSenderId: "139532175779"
 };
 
