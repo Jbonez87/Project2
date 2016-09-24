@@ -16,7 +16,8 @@ class Routes extends Component {
             <IndexRoute component={Home} />
             <Route path="/register" component={Register} />
             <Route path="/login" component={Login} />
-            <Route path="/dashboard" component={Dashboard} onEnter={requireAuth} />
+            <Route path="/dashboard" component={Dashboard} onEnter={requireAuth} >
+            </Route>
           </Route>
         </Router>
       );
