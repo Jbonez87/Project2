@@ -1,0 +1,55 @@
+* {
+	box-sizing: border-box;
+}
+
+body {
+	background-color:lightblue;
+	font-family: 'Lobster', cursive;
+}
+
+.hidden {
+	display: none;
+}
+
+form.post-display {
+	width: 90%;
+	display: inline-block;
+}
+
+ul {
+	list-style: none;
+}
+
+input {
+	font-family: 'Indie Flower', cursive;
+	font-size: 1.5em;
+}
+
+form.post-display input[name="author"] {
+	width: 10%;
+	display: inline-block;
+}
+
+form.post-display input[name="content"] {
+	width: 80%;
+	display: inline-block;
+}
+
+div.like-button {
+	display: inline-block;
+}
+
+
+.not-saved input {
+	background-color: grey;
+	color: red;
+}
+
+.saved input {
+	background-color: transparent;
+	color: black;
+}
+
+.active-buttons {
+	display: inline-block;
+}

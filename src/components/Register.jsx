@@ -2,6 +2,10 @@ import React, { Component } from 'react';
 import { withRouter } from 'react-router';
 import firebase from '../../firebase.config.js';
 
+const propTypes = {
+  uid: React.PropTypes.string,
+};
+
 class Register extends Component {
   constructor() {
     super();
@@ -33,7 +37,8 @@ class Register extends Component {
         .set({first_name: '', last_name: '', email: username })
     })
     .then(() => {
-      this.props.router.push('/dashboard')
+      const userId = firebase.auth().currentUser.uid;
+      this.props.router.push(`/${userId}`);
     })
   }
   render() {

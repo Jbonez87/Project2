@@ -1,83 +1,77 @@
 import React, { Component } from 'react';
-import superagent from 'superagent';
-import SpotList from './SpotList.jsx';
-import SpotPost from './SpotPost.jsx';
+import request from 'superagent';
+import PostList from './PostList.jsx';
+import Post from './Post.jsx';
 
 class Dashboard extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      spotPosts: [],
+      posts: [],
     };
     this.handlePublish = this.handlePublish.bind(this);
     this.httpUpdatePost = this.httpUpdatePost.bind(this);
     this.httpPublishPost = this.httpPublishPost.bind(this);
     this.httpDeletePost = this.httpDeletePost.bind(this);
   }
-  componentDidMount() {
+  componentDidMount() {  // Only happens once.. on first load
     this.httpGetPosts();
   }
   httpGetPosts() {
-    const url = 'https://secret-spots.firebaseio.com/users/posts.json';
-    request.get(url)
-           .then((response) => {
-             const postsData = response.body;
-             let spotPosts = [];
+    const url = 'https://secret-spots.firebaseio.com/post.json';
+    request.get(url)  // go to API get
+           .then((response) => {  // When the response is received...
+             const postsData = response.body;  // Grab the data
+             let posts = [];
              if (postsData) {
-               spotPosts = Object.keys(postsData).map((id) => {
-                 const postData = postsData[id];
-                 return {
-                   id,
-                   author: postData.author,
-                   spotName: postData.spotName,
-                   address: postData.address,
-                   secretEntry: postData.secretEntry,
+               posts = Object.keys(postsData).map((id) => {  // conver their data.... into nice clean objects
+                 const individualPostData = postsData[id];  // grabbing indiviudal data record
+                 return {  // ... and making it NICE!
+                   id,  // <- same as   id: id
+                   author: individualPostData.author,
+                   content: individualPostData.content,
                  };
                });
              }
-             this.setState({ spotPosts });
+             this.setState({ posts });
            });
   }
-  handlePublish({ id, author, spotName, address, secretEntry }) {
+  handlePublish({ id, content, author }) {
     if (id) {
-      this.httpUpdatePost({ id, author, spotName, address, secretEntry });
+      this.httpUpdatePost({ id, content, author, likeCount });
     } else {
-      this.httpPublishPost({ spotName, address, secretEntry });
+      this.httpPublishPost({ content, author });
     }
   }
   httpDeletePost(id) {
-    const url = `https://secret-spots.firebaseio.com/users/posts${id}`;
+    const url = `https://secret-spots.firebaseio.com/posts${id}.json`;
     request.del(url)
            .then(() => {
              this.httpGetPosts();
            });
   }
-  httpUpdatePost({ id, author, spotName, address, secretEntry }) {
-    const url = `https://secret-spots.firebaseio.com/users/posts${id}`;
+  httpUpdatePost({ id, content, author }) {
+    const url = `https://secret-spots.firebaseio.com/posts/${id}.json`;
     request.patch(url)
-           .send({ author, spotName, address, secretEntry })
+           .send({ content, author })
            .then(() => {
              this.httpGetPosts();
            });
   }
-  httpPublishPost({ author, spotName, address, secretEntry }) {
-    const url = 'https://secret-spots.firebaseio.com/users/posts';
+  httpPublishPost({ content, author }) {
+    const url = 'https://secret-spots.firebaseio.com/posts.json';
     request.post(url)
-           .send({ author, spotName, address, secretEntry })
+           .send({ content, author })
            .then(() => {
              this.httpGetPosts();
-           })
+           });
   }
   render() {
     return (
-      <div>
-        {/* <SpotQuery /> */}
-        <SpotList handleDelete={this.httpDeletePost}
-        handlePublish={this.handlePublish}
-        spotPosts={this.state.posts} />
-        <SpotPost
-        handleDelete={this.httpDeletePost}
-        handlePublish={this.handlePublish} />
+      <div className="container">
+        <h1>{this.props.message}</h1>
+        <PostList handleDelete={this.httpDeletePost} handlePublish={this.handlePublish} posts={this.state.posts} />
+        <Post handleDelete={this.httpDeletePost} handlePublish={this.handlePublish} />
       </div>
     );
   }
