@@ -24,7 +24,7 @@ class Dashboard extends Component {
 
   httpGetPosts() {
     const userId = firebase.auth().currentUser.uid;
-    const url = `https://secret-spots.firebaseio.com/users/${userId}posts.json`;
+    const url = `https://secret-spots.firebaseio.com/users/${userId}/posts.json`;
     request.get(url)
     .then((response) => {
       const postsData = response.body;
@@ -85,14 +85,14 @@ class Dashboard extends Component {
   render() {
     return (
       <div className="container">
+        <Post
+          handleDelete={this.httpDeletePost}
+          handlePublish={this.handlePublish}
+        />
         <PostList
           handleDelete={this.httpDeletePost}
           handlePublish={this.handlePublish}
           posts={this.state.posts}
-        />
-        <Post
-          handleDelete={this.httpDeletePost}
-          handlePublish={this.handlePublish}
         />
       </div>
     );

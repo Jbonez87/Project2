@@ -27,7 +27,6 @@ class Post extends Component {
     this.handleEditOfEntry = this.handleEditOfEntry.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleDeleteClick = this.handleDeleteClick.bind(this);
-    this.isSaved = this.isSaved.bind(this);
   }
 
   componentWillReceiveProps(nextProps) {
@@ -85,24 +84,16 @@ class Post extends Component {
     this.props.handleDelete(this.props.id);
   }
 
-  isSaved() {
-    return this.props.author === this.state.localAuthor &&
-    this.props.address === this.state.localAddress &&
-    this.props.spotUrl === this.state.localSpotUrl &&
-    this.props.entry === this.state.localEntry;
-  }
   render() {
     let activeButtons;
-    if (this.isSaved()) {
       activeButtons = (
         <div className="active-buttons">
           <button onClick={this.handleDeleteClick}>x</button>
         </div>
       );
-    }
 
     return (
-      <div className={this.isSaved() ? 'saved' : 'not-saved'} >
+      <div className="" >
         <form className="post-display" onSubmit={this.handleSubmit}>
           <p>Author</p>
           <input

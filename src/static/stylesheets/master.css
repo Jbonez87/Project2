@@ -9,38 +9,29 @@ body {
 
 form.post-display {
 	width: 90%;
-	display: inline-block;
+	display: block;
+	position: relative;
 }
 
 ul {
 	list-style: none;
 }
-
+h1 {
+	text-align: center;
+	color: rgb(31, 135, 88);
+}
+div.registration-form > div {
+	width: 50%;
+	margin: 0 auto;
+}
+div.registration-form > div > input {
+	width: 100%;
+	margin: 0 auto;
+}
+form {
+	display: inline-block;
+	text-align: center;
+}
 input {
 	font-size: 1.5em;
-}
-
-form.post-display input[name="author"] {
-	width: 30%;
-	display: inline-block;
-}
-
-form.post-display input[name="content"] {
-	width: 80%;
-	display: inline-block;
-}
-
-
-.not-saved input {
-	background-color: grey;
-	color: red;
-}
-
-.saved input {
-	background-color: transparent;
-	color: black;
-}
-
-.active-buttons {
-	display: inline-block;
 }
