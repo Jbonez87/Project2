@@ -37,7 +37,6 @@ class Register extends Component {
         .set({first_name: '', last_name: '', email: username })
     })
     .then(() => {
-      const userId = firebase.auth().currentUser.uid;
       this.props.router.push('/dashboard');
     })
   }
@@ -61,7 +60,7 @@ class Register extends Component {
               placeholder="What's the password?"
             />
           </div>
-          <button className="btn" onClick={this.handleSubmit}>Register</button>
+          <button className="btn reg" onClick={this.handleSubmit}>Register</button>
         </div>
       </div>
     );

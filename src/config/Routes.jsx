@@ -19,7 +19,7 @@ class Routes extends Component {
           <Route
             path="/dashboard"
             component={Dashboard}
-            onEnter={requireAuth}
+            // onEnter={requireAuth}
           />
         </Route>
       </Router>

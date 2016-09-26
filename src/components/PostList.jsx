@@ -1,35 +1,38 @@
 import React, { Component } from 'react';
-import Post from './Post.jsx';
+import PostItem from './PostItem.jsx';
 
 const propTypes = {
   posts: React.PropTypes.array.isRequired,
-  handlePublish: React.PropTypes.func,
   handleDelete: React.PropTypes.func,
 };
 
 class PostList extends Component {
   render() {
-    const postElements = this.props.posts.map((post, idx) => {
+    if(this.props.posts.length > 0){
+      const postElements = this.props.posts.map((post, idx) => {
+        return (
+            <PostItem
+              key={idx}
+              handleDelete={this.props.handleDelete}
+              author={post.author}
+              name={post.name}
+              address={post.address}
+              spotUrl={post.spotUrl}
+              entry={post.entry}
+              id={post.id}
+            />
+        );
+      });
       return (
-        <li key={idx}>
-          <Post
-            handleDelete={this.props.handleDelete}
-            handlePublish={this.props.handlePublish}
-            author={post.author}
-            address={post.address}
-            spotUrl={post.spotUrl}
-            entry={post.entry}
-            id={post.id}
-          />
-        </li>
-      );
-    });
-
-    return (
-      <ul>
-        {postElements}
-      </ul>
-    );
+        <ul>
+          {postElements}
+        </ul>
+      )
+      } else {
+        return (
+          <div>No posts</div>
+        )
+      }
   }
 }
 

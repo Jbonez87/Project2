@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import request from 'superagent';
 import PostList from './PostList.jsx';
-import Post from './Post.jsx';
+import PostForm from './PostForm.jsx';
 import firebase from '../../firebase.config.js';
 
 class Dashboard extends Component {
@@ -16,6 +16,7 @@ class Dashboard extends Component {
     this.httpUpdatePost = this.httpUpdatePost.bind(this);
     this.httpPublishPost = this.httpPublishPost.bind(this);
     this.httpDeletePost = this.httpDeletePost.bind(this);
+    this.keepAuthState = this.keepAuthState.bind(this);
   }
 
   componentDidMount() {
@@ -35,6 +36,7 @@ class Dashboard extends Component {
           return {
             id,
             author: individualPostData.author,
+            name: individualPostData.name,
             address: individualPostData.address,
             spotUrl: individualPostData.spotUrl,
             entry: individualPostData.entry,
@@ -45,11 +47,11 @@ class Dashboard extends Component {
     });
   }
 
-  handlePublish({ id, author, address, spotUrl, entry }) {
+  handlePublish({ id, author, name, address, spotUrl, entry }) {
     if (id) {
-      this.httpUpdatePost({ id, author, address, spotUrl, entry });
+      this.httpUpdatePost({ id, author, name, address, spotUrl, entry });
     } else {
-      this.httpPublishPost({ author, address, spotUrl, entry });
+      this.httpPublishPost({ author, name, address, spotUrl, entry });
     }
   }
 
@@ -62,30 +64,39 @@ class Dashboard extends Component {
     });
   }
 
-  httpUpdatePost({ id, author, address, spotUrl, entry }) {
+  httpUpdatePost({ id, author, name, address, spotUrl, entry }) {
     const userId = firebase.auth().currentUser.uid;
     const url = `https://secret-spots.firebaseio.com/users/${userId}/posts/${id}.json`;
     request.patch(url)
-    .send({ author, address, spotUrl, entry })
+    .send({ author, name, address, spotUrl, entry })
     .then(() => {
       this.httpGetPosts();
     });
   }
 
-  httpPublishPost({ author, address, spotUrl, entry }) {
+  httpPublishPost({ author, name, address, spotUrl, entry }) {
     const userId = firebase.auth().currentUser.uid;
     const url = `https://secret-spots.firebaseio.com/users/${userId}/posts.json`;
     request.post(url)
-    .send({ author, address, spotUrl, entry })
+    .send({ author, address, name, spotUrl, entry })
     .then(() => {
       this.httpGetPosts();
     });
+  }
+  keepAuthState() {
+    const ref = new Firebase("https://<YOUR-FIREBASE-APP>.firebaseio.com");
+    const authData = ref.getAuth();
+    if (authData) {
+      console.log("User " + authData.uid + " is logged in with " + authData.provider);
+    } else {
+        console.log("User is logged out");
+    }
   }
 
   render() {
     return (
       <div className="container">
-        <Post
+        <PostForm
           handleDelete={this.httpDeletePost}
           handlePublish={this.handlePublish}
         />
@@ -94,6 +105,7 @@ class Dashboard extends Component {
           handlePublish={this.handlePublish}
           posts={this.state.posts}
         />
+
       </div>
     );
   }

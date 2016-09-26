@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 
 const propTypes = {
   author: React.PropTypes.string,
+  name: React.PropTypes.string,
   address: React.PropTypes.string,
   spotUrl: React.PropTypes.string,
   entry: React.PropTypes.string,
@@ -10,12 +11,13 @@ const propTypes = {
   id: React.PropTypes.string,
 };
 
-class Post extends Component {
+class PostForm extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
       localAuthor: this.props.author || '',
+      localName: this.props.name || '',
       localAddress: this.props.address || '',
       localSpotUrl: this.props.spotUrl || '',
       localEntry: this.props.entry || '',
@@ -27,6 +29,7 @@ class Post extends Component {
     this.handleEditOfEntry = this.handleEditOfEntry.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleDeleteClick = this.handleDeleteClick.bind(this);
+    this.handleEditOfName = this.handleEditOfName.bind(this);
   }
 
   componentWillReceiveProps(nextProps) {
@@ -42,6 +45,14 @@ class Post extends Component {
     const newAuthor = e.target.value;
     this.setState({
       localAuthor: newAuthor,
+    });
+  }
+
+  handleEditOfName(e) {
+    const newName = e.target.value;
+    console.log(e.target.value);
+    this.setState({
+      localName: newName,
     });
   }
 
@@ -72,6 +83,7 @@ class Post extends Component {
     this.props.handlePublish({
       id: this.props.id,
       author: this.state.localAuthor,
+      name: this.state.localName,
       address: this.state.localAddress,
       spotUrl: this.state.localSpotUrl,
       entry: this.state.localEntry,
@@ -101,6 +113,13 @@ class Post extends Component {
             name="author"
             value={this.state.localAuthor}
             onChange={this.handleEditOfAuthor}
+          />
+          <p>Name of Speakeasy</p>
+          <input
+            type="text"
+            name="name"
+            value={this.state.localName}
+            onChange={this.handleEditOfName}
           />
           <p>Address</p>
           <input
@@ -135,6 +154,6 @@ class Post extends Component {
   }
 }
 
-Post.propTypes = propTypes;
+PostForm.propTypes = propTypes;
 
-export default Post;
+export default PostForm;
