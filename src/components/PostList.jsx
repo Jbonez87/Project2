@@ -7,23 +7,24 @@ const propTypes = {
   handleDelete: React.PropTypes.func,
 };
 
-class PostList extends React.Component {
+class PostList extends Component {
   render() {
-    const postElements = this.props.posts.map((post, idx) => {  // for each of the posts... give an li
+    const postElements = this.props.posts.map((post, idx) => {
       return (
         <li key={idx}>
           <Post
             handleDelete={this.props.handleDelete}
             handlePublish={this.props.handlePublish}
-            content={post.content}
             author={post.author}
-            likeCount={post.likeCount}
+            address={post.address}
+            spotUrl={post.spotUrl}
+            entry={post.entry}
             id={post.id}
           />
         </li>
       );
     });
-    // Place all the lis in the Postlists elemtns
+
     return (
       <ul>
         {postElements}

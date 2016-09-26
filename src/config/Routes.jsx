@@ -10,18 +10,21 @@ import requireAuth from '../utils/Auth.js';
 
 class Routes extends Component {
   render() {
-      return (
-        <Router history={hashHistory}>
-          <Route path="/" component={App}>
-            <IndexRoute component={Home} />
-            <Route path="/register" component={Register} />
-            <Route path="/login" component={Login} />
-            <Route path="/dashboard" component={Dashboard} onEnter={requireAuth} >
-            </Route>
-          </Route>
-        </Router>
-      );
-    }
+    return (
+      <Router history={hashHistory}>
+        <Route path="/" component={App}>
+          <IndexRoute component={Home} />
+          <Route path="/register" component={Register} />
+          <Route path="/login" component={Login} />
+          <Route
+            path="/dashboard"
+            component={Dashboard}
+            onEnter={requireAuth}
+          />
+        </Route>
+      </Router>
+    );
   }
+}
 
 export default Routes;

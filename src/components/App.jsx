@@ -9,11 +9,14 @@ const propTypes = {
 class App extends Component {
   constructor() {
     super();
+
     this.state = {
       loggedIn: false,
     };
+
     this.signOut = this.signOut.bind(this);
   }
+
   componentWillMount() {
     setTimeout(() => {
       firebase.auth().onAuthStateChanged((user) => {
@@ -23,13 +26,15 @@ class App extends Component {
       });
     }, 200);
   }
+
   signOut() {
     firebase.auth()
-      .signOut()
-      .then(() => {
-        console.log('user signed out');
-      });
+    .signOut()
+    .then(() => {
+      console.log('user signed out');
+    });
   }
+
   loggedInLinks() {
     if (!this.state.loggedIn) {
       return (
@@ -38,14 +43,14 @@ class App extends Component {
           <Link to="/register" id="register">Register</Link>
         </div>
       );
-    } else {
-        return (
-        <div id="sign-out">
-          <a href="#" onClick={this.signOut}>Sign Out</a>
-        </div>
-      )
     }
+    return (
+      <div id="sign-out">
+        <Link to="/" onClick={this.signOut}>Sign Out</Link>
+      </div>
+    );
   }
+
   render() {
     return (
       <div>

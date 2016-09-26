@@ -7,8 +7,8 @@ const propTypes = {
 };
 
 class Register extends Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     this.state = {
       username: '',
       password: '',
@@ -38,7 +38,7 @@ class Register extends Component {
     })
     .then(() => {
       const userId = firebase.auth().currentUser.uid;
-      this.props.router.push(`/${userId}`);
+      this.props.router.push('/dashboard');
     })
   }
   render() {
@@ -46,10 +46,20 @@ class Register extends Component {
       <div>
         <div className="registration-form">
           <div>
-            <input name="username" onChange={this.handleChange} type="text" placeholder="What's your username?" />
+            <input
+              name="username"
+              onChange={this.handleChange}
+              type="text"
+              placeholder="What's your username?"
+            />
           </div>
           <div>
-            <input name="password" onChange={this.handleChange} type="password" placeholder="What's the password?" />
+            <input
+              name="password"
+              onChange={this.handleChange}
+              type="password"
+              placeholder="What's the password?"
+            />
           </div>
           <button className="btn" onClick={this.handleSubmit}>Register</button>
         </div>
@@ -57,5 +67,7 @@ class Register extends Component {
     );
   }
 }
+
+Register.propTypes = propTypes;
 
 export default withRouter(Register);

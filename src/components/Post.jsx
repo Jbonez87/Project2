@@ -1,59 +1,95 @@
 import React, { Component } from 'react';
 
 const propTypes = {
-  content: React.PropTypes.string,
   author: React.PropTypes.string,
+  address: React.PropTypes.string,
+  spotUrl: React.PropTypes.string,
+  entry: React.PropTypes.string,
   handlePublish: React.PropTypes.func,
   handleDelete: React.PropTypes.func,
   id: React.PropTypes.string,
 };
 
-class Post extends React.Component {
+class Post extends Component {
   constructor(props) {
     super(props);
+
     this.state = {
       localAuthor: this.props.author || '',
-      localContent: this.props.content || '',
+      localAddress: this.props.address || '',
+      localSpotUrl: this.props.spotUrl || '',
+      localEntry: this.props.entry || '',
     };
+
     this.handleEditOfAuthor = this.handleEditOfAuthor.bind(this);
-    this.handleEditOfContent = this.handleEditOfContent.bind(this);
+    this.handleEditOfAddress = this.handleEditOfAddress.bind(this);
+    this.handleEditOfSpotUrl = this.handleEditOfSpotUrl.bind(this);
+    this.handleEditOfEntry = this.handleEditOfEntry.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleDeleteClick = this.handleDeleteClick.bind(this);
     this.isSaved = this.isSaved.bind(this);
   }
+
   componentWillReceiveProps(nextProps) {
     this.setState({
       localAuthor: nextProps.author || '',
-      localContent: nextProps.content || '',
+      localAddress: nextProps.address || '',
+      localSpotUrl: nextProps.spotUrl || '',
+      localEntry: nextProps.entry || '',
     });
   }
+
   handleEditOfAuthor(e) {
     const newAuthor = e.target.value;
     this.setState({
       localAuthor: newAuthor,
     });
   }
-  handleEditOfContent(e) {
-    const newContent = e.target.value;
+
+  handleEditOfAddress(e) {
+    const newAddress = e.target.value;
     this.setState({
-      localContent: newContent,
+      localAddress: newAddress,
     });
   }
+
+  handleEditOfSpotUrl(e) {
+    const newSpotUrl = e.target.value;
+    this.setState({
+      localSpotUrl: newSpotUrl,
+    });
+  }
+
+  handleEditOfEntry(e) {
+    const newEntry = e.target.value;
+    this.setState({
+      localEntry: newEntry,
+    });
+  }
+
   handleSubmit(e) {
     e.preventDefault();
+
     this.props.handlePublish({
       id: this.props.id,
       author: this.state.localAuthor,
-      content: this.state.localContent,
+      address: this.state.localAddress,
+      spotUrl: this.state.localSpotUrl,
+      entry: this.state.localEntry,
     });
+
     this.setState({ saved: true });
   }
+
   handleDeleteClick() {
     this.props.handleDelete(this.props.id);
   }
+
   isSaved() {
     return this.props.author === this.state.localAuthor &&
-          this.props.content === this.state.localContent;
+    this.props.address === this.state.localAddress &&
+    this.props.spotUrl === this.state.localSpotUrl &&
+    this.props.entry === this.state.localEntry;
   }
   render() {
     let activeButtons;
@@ -64,24 +100,41 @@ class Post extends React.Component {
         </div>
       );
     }
+
     return (
       <div className={this.isSaved() ? 'saved' : 'not-saved'} >
         <form className="post-display" onSubmit={this.handleSubmit}>
+          <p>Author</p>
           <input
             type="text"
             name="author"
             value={this.state.localAuthor}
             onChange={this.handleEditOfAuthor}
           />
+          <p>Address</p>
           <input
             type="text"
-            name="content"
-            value={this.state.localContent}
-            onChange={this.handleEditOfContent}
+            name="address"
+            value={this.state.localAddress}
+            onChange={this.handleEditOfAddress}
+          />
+          <p>Link</p>
+          <input
+            type="text"
+            name="spotUrl"
+            value={this.state.localSpotUrl}
+            onChange={this.handleEditOfSpotUrl}
+          />
+          <p>How to get in</p>
+          <input
+            type="text"
+            name="entry"
+            value={this.state.localEntry}
+            onChange={this.handleEditOfEntry}
           />
           <input
             type="submit"
-            value="SAVE"
+            value="Post"
             className="hidden"
           />
         </form>
