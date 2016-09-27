@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import request from 'superagent';
 import PostList from './PostList.jsx';
-import PostForm from './PostForm.jsx';
+import Post from './Post.jsx';
 import firebase from '../../firebase.config.js';
 
 class Dashboard extends Component {
@@ -16,7 +16,6 @@ class Dashboard extends Component {
     this.httpUpdatePost = this.httpUpdatePost.bind(this);
     this.httpPublishPost = this.httpPublishPost.bind(this);
     this.httpDeletePost = this.httpDeletePost.bind(this);
-    this.keepAuthState = this.keepAuthState.bind(this);
   }
 
   componentDidMount() {
@@ -83,20 +82,11 @@ class Dashboard extends Component {
       this.httpGetPosts();
     });
   }
-  keepAuthState() {
-    const ref = new Firebase("https://<YOUR-FIREBASE-APP>.firebaseio.com");
-    const authData = ref.getAuth();
-    if (authData) {
-      console.log("User " + authData.uid + " is logged in with " + authData.provider);
-    } else {
-        console.log("User is logged out");
-    }
-  }
 
   render() {
     return (
       <div className="container">
-        <PostForm
+        <Post
           handleDelete={this.httpDeletePost}
           handlePublish={this.handlePublish}
         />

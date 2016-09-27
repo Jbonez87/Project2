@@ -41,8 +41,8 @@ class Login extends Component {
           </div>
           <div>
             <input name="password" onChange={this.handleChange} type="password" placeholder="What's the password?" />
+            <button className="btn-log" onClick={this.handleSubmit}>Login</button>
           </div>
-          <button className="btn" onClick={this.handleSubmit}>Login</button>
         </div>
       </div>
     );

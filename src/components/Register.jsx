@@ -59,8 +59,8 @@ class Register extends Component {
               type="password"
               placeholder="What's the password?"
             />
+            <button className="btn-reg" onClick={this.handleSubmit}>Register</button>
           </div>
-          <button className="btn reg" onClick={this.handleSubmit}>Register</button>
         </div>
       </div>
     );

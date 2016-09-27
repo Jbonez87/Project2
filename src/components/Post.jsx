@@ -11,7 +11,7 @@ const propTypes = {
   id: React.PropTypes.string,
 };
 
-class PostForm extends Component {
+class Post extends Component {
   constructor(props) {
     super(props);
 
@@ -29,7 +29,6 @@ class PostForm extends Component {
     this.handleEditOfEntry = this.handleEditOfEntry.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleDeleteClick = this.handleDeleteClick.bind(this);
-    this.handleEditOfName = this.handleEditOfName.bind(this);
   }
 
   componentWillReceiveProps(nextProps) {
@@ -50,7 +49,6 @@ class PostForm extends Component {
 
   handleEditOfName(e) {
     const newName = e.target.value;
-    console.log(e.target.value);
     this.setState({
       localName: newName,
     });
@@ -154,6 +152,6 @@ class PostForm extends Component {
   }
 }
 
-PostForm.propTypes = propTypes;
+Post.propTypes = propTypes;
 
-export default PostForm;
+export default Post;
