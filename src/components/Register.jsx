@@ -3,7 +3,7 @@ import { withRouter } from 'react-router';
 import firebase from '../../firebase.config.js';
 
 const propTypes = {
-  uid: React.PropTypes.string,
+  id: React.PropTypes.string,
 };
 
 class Register extends Component {

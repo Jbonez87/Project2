@@ -34,6 +34,7 @@ class Post extends Component {
   componentWillReceiveProps(nextProps) {
     this.setState({
       localAuthor: nextProps.author || '',
+      localName: nextProps.name || '',
       localAddress: nextProps.address || '',
       localSpotUrl: nextProps.spotUrl || '',
       localEntry: nextProps.entry || '',
