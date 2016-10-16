@@ -6,7 +6,7 @@ import Register from '../components/Register.jsx';
 import Login from '../components/Login.jsx';
 import Dashboard from '../components/Dashboard.jsx';
 import requireAuth from '../utils/Auth.js';
-
+// test commit
 
 class Routes extends Component {
   render() {
